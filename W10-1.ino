@@ -2,8 +2,8 @@
 
 const char* ssid = "Xperia XZ3_f7ca";
 const char* password = "qwer1234";
-const char* host = "maker.ifttt.com"; //IFTTT serverºô§}
-const char* event = "LINE01";  //IFTTT¨Æ¥ó¦WºÙ
+const char* host = "maker.ifttt.com"; //IFTTT serverç¶²å€
+const char* event = "LINE01";  //IFTTTäº‹ä»¶åç¨±
 const char* apiKey = "ZqsSdsicipA92tECQcsyR";  //IFTTT Applet key
 
 void setup() {
@@ -23,18 +23,18 @@ void loop() {
   int value1 = 25;
   int value2 = 50;
 
-  ClientRequest(String(value1), String(value2));  //Client¶Ç°e¸ê®Æ
+  ClientRequest(String(value1), String(value2));  //Clientå‚³é€è³‡æ–™
   
   delay(30000);
 }  
 
 void ClientRequest(String value1, String value2){
   
-  WiFiClient client;  //«Ø¥ßClientª«¥ó
-  const int httpPort = 80;  //¹w³]³q°Tªú80
-  String JsonString = "";  //¦¹½d¨Ò¤£·|¥Î¨ì
+  WiFiClient client;  //å»ºç«‹Clientç‰©ä»¶
+  const int httpPort = 80;  //é è¨­é€šè¨Šé˜œ80
+  String JsonString = "";  //æ­¤ç¯„ä¾‹ä¸æœƒç”¨åˆ°
 
-  //Client³sµ²Server
+  //Clienté€£çµServer
   if (client.connect(host, httpPort)) {
     
     //Webhook API
@@ -42,7 +42,7 @@ void ClientRequest(String value1, String value2){
     //Query String
     url += "?value1=" + value1 + "&value2=" + value2;
 
-    //Client¶Ç°e
+    //Clientå‚³é€
     client.println(String("POST ") + url + " HTTP/1.1");
     client.println(String("Host: ") + host); 
     client.println("Content-Type: application/json");
@@ -51,22 +51,22 @@ void ClientRequest(String value1, String value2){
     client.println();
     client.println(JsonString);
 
-    //µ¥«İ5¬í¡A¨C0.1¬í°»´ú¤@¦¸¬O§_¦³±µ¦¬¨ìresponse¸ê®Æ  
+    //ç­‰å¾…5ç§’ï¼Œæ¯0.1ç§’åµæ¸¬ä¸€æ¬¡æ˜¯å¦æœ‰æ¥æ”¶åˆ°responseè³‡æ–™  
     int timeout = 0;
     while(!client.available() && (timeout++ <= 50)){
       delay(100);
     }
   
-    //¦pªGµL¦^À³
+    //å¦‚æœç„¡å›æ‡‰
     if(!client.available()) {
       Serial.println("No response...");
     }
-    //¥Îwhile°j°é¤@¦r¤@¦rÅª¨úResponse
+    //ç”¨whileè¿´åœˆä¸€å­—ä¸€å­—è®€å–Response
     while(client.available()){
       Serial.write(client.read());
     }
 
-    //°±¤îClient
+    //åœæ­¢Client
     client.stop(); 
   } 
 }
